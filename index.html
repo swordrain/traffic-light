@@ -1,0 +1,78 @@
+<!doctype html>
+
+<html>
+<head>
+<title>Traffic Light</title>
+<style>
+
+.light{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+.hightlight{
+  opacity: 1;
+}
+.red{
+  background-color: red;
+}
+.green{
+  background-color: green;
+}
+.orange{
+  background-color: orange;
+}
+
+</style>
+
+</head>
+
+<body>
+<div class="light red"></div>
+<div class="light orange"></div>
+<div class="light green"></div>
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  function setLight(light){
+    const $lights = $(".light")
+    $lights.removeClass("hightlight")
+    $(`.${light}`).addClass("hightlight")
+  }
+  const redPromise = ()=> new Promise(resolve => {
+    setLight('red')
+    setTimeout(()=>{
+      resolve()
+    }, 1000)
+  })
+  const orangePromise = ()=> new Promise(resolve => {
+    setLight('orange')
+    setTimeout(()=>{
+      resolve()
+    }, 2000)
+  })
+  const greenPromise = ()=> new Promise(resolve => {
+    setLight('green')
+    setTimeout(()=>{
+      resolve()
+    }, 3000)
+  })
+
+function start(){
+  redPromise().then(()=>{
+    return orangePromise()
+  }).then(()=>{
+    return greenPromise()
+  }).then(()=>{
+    start()
+  })
+}
+
+start()
+
+
+</script>
+
+</body>
+
+</html>
